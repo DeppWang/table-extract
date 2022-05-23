@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}SignUp{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="username">Username</label>
+        <input name="username" id="username" pattern="[a-zA-Z0-9]{5,20}" title="只能使用字母和数字，长度在 5~20 之间"
+               required>
+        <label for="email">Email</label>
+        <input name="email" id="email" pattern="[\w.]+@\w+\.com" title="正确的邮箱格式" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password"
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[.-_!@#$%^&*]).{8,20}"
+               title="长度在 8~20 之间，至少包含一个大写、一个小写、一个数字、一个特殊符号(.-_!@#$%^&*)" required>
+        <input type="submit" value="Register">
+    </form>
+{% endblock %}
