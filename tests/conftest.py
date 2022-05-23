@@ -33,14 +33,14 @@ def client(app):
     return app.test_client()
 
 
+@pytest.fixture
+def auth(client):
+    return AuthActions(client)
+
+
 class AuthActions:
     def __init__(self, client):
         self._client = client
 
     def login(self, username="test_user", password="Test_user_password1"):
         return self._client.post("/login", data={"username": username, "password": password})
-
-
-@pytest.fixture
-def auth(client):
-    return AuthActions(client)

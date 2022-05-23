@@ -5,8 +5,6 @@ from flask import current_app
 from flask import g
 from flask.cli import with_appcontext
 
-DATABASE = 'database.db'
-
 
 def get_db():
     if "db" not in g:

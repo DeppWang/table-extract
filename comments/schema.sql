@@ -6,7 +6,7 @@ CREATE TABLE comments
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
     content      VARCHAR   NOT NULL,
     parent       INTEGER            DEFAULT 0,
-    username     VARCHAR,
+    username     VARCHAR   NOT NULL,
     created_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
