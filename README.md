@@ -17,14 +17,14 @@ pip install -r requirements.txt
 
 
 ```
-$ export FLASK_APP=comments
+$ export FLASK_APP=tableetl
 $ flask init-db
 $ flask run
 ```
 
 ## 测试
 
-安装 `Comments`:
+安装 `tableetl`:
 
 ```
 $ pip install -e .
