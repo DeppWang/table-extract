@@ -22,6 +22,15 @@ $ flask init-db
 $ flask run
 ```
 
+保持后台运行：
+
+```
+gunicorn -w 1 -b 0.0.0.0:80 tableetl:create_app -- daemon
+```
+
+- https://iximiuz.com/en/posts/flask-gevent-tutorial/
+- https://lionhead8.medium.com/run-python-flask-server-application-in-background-643692634fd3
+
 ## 测试
 
 安装 `tableetl`:
