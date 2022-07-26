@@ -14,7 +14,10 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bp.route("/", methods=["GET", "POST"])
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         if 'file' not in request.files:
@@ -34,9 +37,7 @@ def index():
             file.save(input_file_path)
             dfs = tabula.read_pdf(input_file_path, pages='all')
             tabula.convert_into(input_file_path, output_file_path, output_format="csv", pages='all')
-            print('test2')
             uploads = os.path.join(current_app.root_path, UPLOAD_FOLDER)
-            print(uploads)
             # tabula.convert_into("test.pdf", "output.csv", output_format="csv", pages='all')
             # return send_from_directory(directory=uploads, path='output.csv')
             return send_file(output_file_path, as_attachment=True)
