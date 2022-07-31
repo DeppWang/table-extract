@@ -30,6 +30,7 @@ gunicorn -w 1 -b 0.0.0.0:80 tableetl:create_app -- daemon
 
 - https://iximiuz.com/en/posts/flask-gevent-tutorial/
 - https://lionhead8.medium.com/run-python-flask-server-application-in-background-643692634fd3
+- https://medium.com/coding-memo/backend-run-flask-in-background-with-gunicorn-3f1f4cffca8d
 
 ## 测试
 
