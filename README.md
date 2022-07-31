@@ -29,7 +29,7 @@ $ flask run
 ### 保持后台运行
 
 ```
-gunicorn -w 1 -b 0.0.0.0:80 tableetl:app -- daemon
+gunicorn -w 2 -b 0.0.0.0:80 tableetl:app -- daemon
 ```
 
 - https://iximiuz.com/en/posts/flask-gevent-tutorial/

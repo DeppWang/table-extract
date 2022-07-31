@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 
 import tabula
 
-UPLOAD_FOLDER = '/root/flask-demo/uploads'
+UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 
 bp = Blueprint("tableetl", __name__)
