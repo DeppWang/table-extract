@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  flask_app_gunicorn:
+    init: true
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - PORT_APP=80
+      - WORKERS=4
+      - THREADS=50
+    ports:
+      - "127.0.0.1:80:3000"
