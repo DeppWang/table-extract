@@ -15,6 +15,8 @@ pip install -r requirements.txt
 
 ## 运行
 
+### 内置开发模式：
+
 
 ```
 $ export FLASK_APP=tableetl
@@ -22,10 +24,12 @@ $ flask init-db
 $ flask run
 ```
 
-保持后台运行：
+- https://flask.palletsprojects.com/en/2.0.x/server/#development-server
+
+### 保持后台运行
 
 ```
-gunicorn -w 1 -b 0.0.0.0:80 tableetl:create_app -- daemon
+gunicorn -w 1 -b 0.0.0.0:80 tableetl:app -- daemon
 ```
 
 - https://iximiuz.com/en/posts/flask-gevent-tutorial/
