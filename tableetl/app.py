@@ -16,6 +16,7 @@ def allowed_file(filename):
 
 from flask import Flask
 app = Flask(__name__)
+app.logger.basicConfig(filename='debug.log',level=app.logger.DEBUG)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
