@@ -1,6 +1,9 @@
 FROM python:3.8
 
-RUN pip install Flask requests gunicorn tabula-py
+RUN pip3 install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip && \
+    pip3 install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple
+    
+RUN pip install --default-timeout=100 Flask requests gunicorn tabula-py
 
 COPY tableetl /tableetl
 

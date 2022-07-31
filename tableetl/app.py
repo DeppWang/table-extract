@@ -19,6 +19,12 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    app.logger.debug("I'm a DEBUG message")
+    app.logger.info("I'm an INFO message")
+    app.logger.warning("I'm a WARNING message")
+    app.logger.error("I'm a ERROR message")
+
+    app.logger.critical("I'm a CRITICAL message")
     if request.method == "POST":
         if 'file' not in request.files:
             flash('No file part')
