@@ -44,21 +44,13 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def setup_file_logging():
-    logging.config.dictConfig(yaml.load(open('logging.conf')))
-    logfile = logging.getLogger()
-    logfile.debug("<<setup_file_logging")
-
-
 app = Flask(__name__)
-app.logger.basicConfig(filename='debug.log', level=app.logger.DEBUG)
-app.logger.basicConfig(filename='info.log', level=app.logger.INFO)
-setup_file_logging()
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        app.logger.info("POST")
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -70,7 +62,7 @@ def index():
             return redirect(request.url)
 
         if file and allowed_file(file.filename):
-            app.logger.info("file.filename")
+            app.logger.info("allowed_file")
             input_file_path = os.path.join(UPLOAD_FOLDER, file.filename)
             output_file_path = os.path.join(UPLOAD_FOLDER, 'output.csv')
             file.save(input_file_path)
@@ -78,5 +70,5 @@ def index():
             return send_file(output_file_path, as_attachment=True)
         flash('只能上传 pdf 文件')
         return redirect(request.url)
-
+    app.logger.info("GET")
     return render_template("tableetl/index.html")
