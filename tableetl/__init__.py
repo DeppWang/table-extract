@@ -1,21 +1,35 @@
-# from re import T
+from distutils.log import INFO
 from flask import Flask
-# UPLOAD_FOLDER = 'uploads'
+from logging.config import dictConfig
+
+dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+    'handlers': {
+        'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        },
+        'file_handler': {
+            'class': 'logging.FileHandler',
+            'filename': 'info.log',
+            'formatter': 'default'
+        }
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi', 'file_handler']
+    }
+})
 
 app = Flask(__name__)
-    # app.config.from_mapping(
-    #     # SECRET_KEY="dev",  # RuntimeError: The session is unavailable because no secret key was set.
-    #     UPLOAD_FOLDER=UPLOAD_FOLDER
-    # )
 
-app.config['SECRET_KEY'] = 'b43e2ce96eac84c9c5690f4c315f2fd3'
-app.config["DEBUG"] = True
 
-@app.route("/hello")
-def hello():
-    return "Hello, World!"
-
-from tableetl.index import bp
-app.register_blueprint(bp)
-app.add_url_rule("/", endpoint="index")
-
+@app.route('/')
+def index():
+    app.logger.info('test info')
+    return 'Hello World!'

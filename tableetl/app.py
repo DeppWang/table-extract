@@ -1,14 +1,39 @@
 from flask import Flask
 import logging
+from logging.config import dictConfig
 import os
 from flask import Blueprint, current_app, flash, redirect, request, render_template, send_file, send_from_directory
 # import tabula
 from werkzeug.utils import secure_filename
 
 import tabula
-import yaml
 
-UPLOAD_FOLDER = './uploads'
+
+dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+    'handlers': {
+        'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        },
+        'file_handler': {
+            'class': 'logging.FileHandler',
+            'filename': 'info.log',
+            'formatter': 'default'
+        }
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi', 'file_handler']
+    }
+})
+
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 ALLOWED_EXTENSIONS = {'pdf'}
 
 bp = Blueprint("tableetl", __name__)
@@ -33,12 +58,6 @@ setup_file_logging()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    app.logger.debug("I'm a DEBUG message")
-    app.logger.info("I'm an INFO message")
-    app.logger.warning("I'm a WARNING message")
-    app.logger.error("I'm a ERROR message")
-
-    app.logger.critical("I'm a CRITICAL message")
     if request.method == "POST":
         if 'file' not in request.files:
             flash('No file part')
@@ -51,15 +70,11 @@ def index():
             return redirect(request.url)
 
         if file and allowed_file(file.filename):
-            # filename = secure_filename(file.filename)
+            app.logger.info("file.filename")
             input_file_path = os.path.join(UPLOAD_FOLDER, file.filename)
             output_file_path = os.path.join(UPLOAD_FOLDER, 'output.csv')
             file.save(input_file_path)
-            dfs = tabula.read_pdf(input_file_path, pages='all')
             tabula.convert_into(input_file_path, output_file_path, output_format="csv", pages='all')
-            uploads = os.path.join(current_app.root_path, UPLOAD_FOLDER)
-            # tabula.convert_into("test.pdf", "output.csv", output_format="csv", pages='all')
-            # return send_from_directory(directory=uploads, path='output.csv')
             return send_file(output_file_path, as_attachment=True)
         flash('只能上传 pdf 文件')
         return redirect(request.url)

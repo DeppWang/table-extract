@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ```
 $ export FLASK_APP=tableetl
 $ flask init-db
-$ flask run
+$ flask run -h 0.0.0.0 -p 80
 ```
 
 - https://flask.palletsprojects.com/en/2.0.x/server/#development-server
