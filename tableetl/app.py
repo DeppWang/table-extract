@@ -1,22 +1,35 @@
+from flask import Flask
+import logging
 import os
 from flask import Blueprint, current_app, flash, redirect, request, render_template, send_file, send_from_directory
 # import tabula
 from werkzeug.utils import secure_filename
 
 import tabula
+import yaml
 
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 
 bp = Blueprint("tableetl", __name__)
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-from flask import Flask
+
+def setup_file_logging():
+    logging.config.dictConfig(yaml.load(open('logging.conf')))
+    logfile = logging.getLogger()
+    logfile.debug("<<setup_file_logging")
+
+
 app = Flask(__name__)
-app.logger.basicConfig(filename='debug.log',level=app.logger.DEBUG)
+app.logger.basicConfig(filename='debug.log', level=app.logger.DEBUG)
+app.logger.basicConfig(filename='info.log', level=app.logger.INFO)
+setup_file_logging()
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -36,7 +49,7 @@ def index():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        
+
         if file and allowed_file(file.filename):
             # filename = secure_filename(file.filename)
             input_file_path = os.path.join(UPLOAD_FOLDER, file.filename)
@@ -50,5 +63,5 @@ def index():
             return send_file(output_file_path, as_attachment=True)
         flash('只能上传 pdf 文件')
         return redirect(request.url)
-        
+
     return render_template("tableetl/index.html")
