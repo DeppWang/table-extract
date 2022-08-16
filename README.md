@@ -8,7 +8,10 @@
 ```
 docker run -dit -p 80:80 --name="table" java-python /bin/bash 
 cd workspace/table-extract
-docker cp . c0fd936bf027:/home/table
+docker cp . c0fd936bf027:/home/table-extract
+gunicorn -c gunicorn_conf.py run:app --preload
+git clone ssh://git@10.60.128.2:7999/elab-2/table-extract.git
+docker exec -it c0fd936bf027 /bin/bash
 ```
 
 
