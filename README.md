@@ -1,3 +1,18 @@
+## Hard Point
+1. 镜像
+2. Gunicorn 稳定性
+3. 图片截取、图片解析
+
+
+
+```
+docker run -dit -p 80:80 --name="table" java-python /bin/bash 
+cd workspace/table-extract
+docker cp . c0fd936bf027:/home/table
+```
+
+
+
 ## 安装
 
 安装虚拟环境
@@ -50,6 +65,3 @@ $ pip install -e .
 pytest
 ```
 
-## 方案
-
-[方案](方案.md)
