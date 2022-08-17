@@ -1,7 +1,5 @@
 import os
-from flask import Blueprint, current_app, flash, redirect, request, render_template, send_file, send_from_directory
-# import tabula
-from werkzeug.utils import secure_filename
+from flask import Blueprint, current_app, flash, redirect, request, render_template, send_file
 
 import tabula
 

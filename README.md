@@ -9,7 +9,7 @@
 docker run -dit -p 80:80 --name="table" java-python /bin/bash 
 cd workspace/table-extract
 docker cp . c0fd936bf027:/home/table-extract
-gunicorn -c gunicorn_conf.py run:app --preload
+gunicorn -c gunicorn_conf.py tableetl:app --preload
 git clone ssh://git@10.60.128.2:7999/elab-2/table-extract.git
 docker exec -it c0fd936bf027 /bin/bash
 ```
@@ -53,6 +53,10 @@ gunicorn -w 2 -b 0.0.0.0:80 tableetl:app -- daemon
 - https://iximiuz.com/en/posts/flask-gevent-tutorial/
 - https://lionhead8.medium.com/run-python-flask-server-application-in-background-643692634fd3
 - https://medium.com/coding-memo/backend-run-flask-in-background-with-gunicorn-3f1f4cffca8d
+
+### Session
+
+
 
 ## 测试
 

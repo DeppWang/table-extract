@@ -45,7 +45,7 @@ def allowed_file(filename):
 
 
 app = Flask(__name__)
-
+app.secret_key = 'dev'
 
 @app.route("/", methods=["GET", "POST"])
 def index():

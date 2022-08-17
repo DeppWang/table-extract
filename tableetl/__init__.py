@@ -1,74 +1,23 @@
 from flask import Flask
-import logging
-from logging.config import dictConfig
-import os
-from flask import Blueprint, current_app, flash, redirect, request, render_template, send_file, send_from_directory
-# import tabula
-from werkzeug.utils import secure_filename
-
-import tabula
 
 
-dictConfig({
-    'version': 1,
-    'formatters': {
-        'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-        }},
-    'handlers': {
-        'wsgi': {
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://flask.logging.wsgi_errors_stream',
-            'formatter': 'default'
-        },
-        'file_handler': {
-            'class': 'logging.FileHandler',
-            'filename': 'info.log',
-            'formatter': 'default'
-        }
-    },
-    'root': {
-        'level': 'INFO',
-        'handlers': ['wsgi', 'file_handler']
-    }
-})
+def create_app(test_config=None):
+    app = Flask(__name__)
+    app.config.from_mapping(
+        SECRET_KEY="dev",  # RuntimeError: The session is unavailable because no secret key was set.
+        DATABASE="database.db",
+    )
 
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
-ALLOWED_EXTENSIONS = {'pdf'}
+    if test_config is not None:
+        app.config.update(test_config)
 
-bp = Blueprint("tableetl", __name__)
+    @app.route("/hello")
+    def hello():
+        return "Hello, World!"
 
+    from index import bp
+    app.register_blueprint(bp)
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+    return app
 
 app = Flask(__name__)
-
-
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        app.logger.info("POST")
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-
-        if file and allowed_file(file.filename):
-            app.logger.info("allowed_file")
-            input_file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-            output_file_path = os.path.join(UPLOAD_FOLDER, 'output.csv')
-            file.save(input_file_path)
-            tabula.convert_into(input_file_path, output_file_path, output_format="csv", pages='all')
-            return send_file(output_file_path, as_attachment=True)
-        flash('只能上传 pdf 文件')
-        return redirect(request.url)
-    app.logger.info("GET")
-    return render_template("tableetl/index.html")
