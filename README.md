@@ -1,13 +1,15 @@
 ## Hard Point
 1. 镜像
 2. Gunicorn 稳定性
-3. 图片截取、图片解析
+3. 图片截取
+4. 图片解析
+5. 指定横向
 
 
 
 ```
-docker build -t table-extract2 .
-docker run -dit -p 80:80 --name="table" table-extract /bin/bash 
+docker build -t table-extract .
+docker run -dit -p 80:80 --name=table-extract table-extract /bin/bash 
 cd workspace/table-extract
 docker cp . c0fd936bf027:/home/table-extract
 gunicorn -c gunicorn_conf.py tableetl:app --preload
