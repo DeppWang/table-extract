@@ -6,7 +6,8 @@
 
 
 ```
-docker run -dit -p 80:80 --name="table" java-python /bin/bash 
+docker build -t table-extract .
+docker run -d -p 80:80 --name="table" java-python /bin/bash 
 cd workspace/table-extract
 docker cp . c0fd936bf027:/home/table-extract
 gunicorn -c gunicorn_conf.py tableetl:app --preload
