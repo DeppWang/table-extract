@@ -20,4 +20,4 @@ def create_app(test_config=None):
 
     return app
 
-app = Flask(__name__)
+create_app()
