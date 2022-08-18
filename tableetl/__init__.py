@@ -16,6 +16,7 @@ def create_app(test_config=None):
 
     from index import bp
     app.register_blueprint(bp)
+    app.add_url_rule("/", endpoint="index")
 
     return app
 
