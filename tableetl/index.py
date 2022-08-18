@@ -3,7 +3,7 @@ from flask import Blueprint, current_app, flash, redirect, request, render_templ
 
 import tabula
 
-UPLOAD_FOLDER = '/root/flask-demo/uploads'
+UPLOAD_FOLDER = '/home/table-extract/uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 
 bp = Blueprint("tableetl", __name__)
