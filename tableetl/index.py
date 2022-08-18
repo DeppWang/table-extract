@@ -6,7 +6,7 @@ import tabula
 UPLOAD_FOLDER = '/home/table-extract/uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 
-bp = Blueprint("tableetl", __name__)
+bp = Blueprint("index", __name__)
 
 def allowed_file(filename):
     return '.' in filename and \
