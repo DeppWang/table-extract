@@ -11,13 +11,16 @@
 
 <body>
     <main class="page">
-        <h2>PDF 表格提取</h2>
+        <h2>表格提取</h2>
+        
         <!-- input file -->
         <div class="box">
+            <p>请选择一个带有表格的文件（支持：PDF、PNG、JPG 格式）</p>
             <form method="post" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <input type="submit" value="提取">
             </form>
+            <p style="text-align-last: right;">提取表格格式为 csv</p>
         </div>
     </main>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
